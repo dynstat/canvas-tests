@@ -69,8 +69,8 @@ function fillCircleArray(n) {
     for (let i = 0; i < n; i++) {
         x = Math.random() * innerWidth;
         y = Math.random() * innerHeight;
-        dx = (Math.random());
-        dy = (Math.random());
+        dx = (Math.random() * 0.8) - 0.4;  // setting the range (-0.4 to +0.4). Here, 0.8 is the factor that decides the upper limit of randomness as 0.8. subtracting its half value will provide the evenly distributed randomness. i.e from -0.4 to 0.4
+        dy = (Math.random() * 0.8) - 0.4;
         circleArray.push(new Circle(x, y, dx, dy, 5))
     }
 }
