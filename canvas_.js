@@ -103,13 +103,16 @@ function fillCircleArray(n) {
         y = Math.floor(Math.random() * innerHeight);
 
         // setting the range (-0.4 to +0.4). For example if dx = (Math.random() * 0.8) - 0.4  , 0.8 is the factor that decides the upper limit of randomness as 0.8. subtracting its half value will provide the evenly distributed randomness. i.e from -0.4 to 0.4
-        dx = parseFloat((Math.random() * 1.8) - 0.9).toFixed(1);
-        dy = parseFloat((Math.random() * 1.8) - 0.9).toFixed(1);
+        // dx = (Math.random() * 1.8) - 0.9;
+        // dy = (Math.random() * 1.8) - 0.9;
+        dx = +parseFloat((Math.random() * 1.8) - 0.9).toFixed(1);  // or use Number() constructor
+        dy = +parseFloat((Math.random() * 1.8) - 0.9).toFixed(1);
+        // console.log(typeof dx, typeof dy);
         circleArray.push(new Circle(x, y, dx, dy, 0.1))
     }
 }
 fillCircleArray(2000);
-console.log(circleArray);
+// console.log(circleArray);
 function animate() {
     requestAnimationFrame(animate);
 
