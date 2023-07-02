@@ -18,16 +18,29 @@ window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
 })
 
+// mouse events
+let mouse = {
+    x: undefined,
+    y: undefined
+}
+
+window.addEventListener('mousemove', (e) => {
+    mouse.x = e.x;
+    mouse.y = e.y;
+})
+
 
 // creating a class for the circle
 
 class Circle {
-    constructor(x = 300, y = 300, dx = 5, dy = 5, radius = 30) {
+    constructor(x = 300, y = 300, dx = 5, dy = 5, radius = 0.1, baseradius = 0.1, maxradius = 30) {
         this.x = x;
         this.y = y;
         this.dx = dx;
         this.dy = dy;
         this.radius = radius;
+        this.baseradius = baseradius;
+        this.maxradius = maxradius;
         this.color = colorPalette[Math.floor(Math.random() * 4)];
         this.draw = function () {
             c.beginPath();
@@ -58,6 +71,18 @@ class Circle {
 
             // console.log(`2   x = ${this.x}, y = ${this.y}`);
             // console.log(`2   innerWidth = ${innerWidth}, innerHeigth = ${innerHeight}`);
+
+            // user interaction
+            if (mouse.x - this.x < 50 && mouse.x - this.x > -50
+                && mouse.y - this.y < 50 && mouse.y - this.y > -50) {
+                if (this.radius < maxradius) {
+                    this.radius += 2; // 1 is rate of size increase in the radius.
+                }
+            }
+            else if (this.radius > baseradius) {
+                this.radius -= 0.1;
+            }
+
             c.stroke();
         }
     }
@@ -76,12 +101,14 @@ function fillCircleArray(n) {
     for (let i = 0; i < n; i++) {
         x = Math.random() * innerWidth;
         y = Math.random() * innerHeight;
-        dx = (Math.random() * 0.8) - 0.4;  // setting the range (-0.4 to +0.4). Here, 0.8 is the factor that decides the upper limit of randomness as 0.8. subtracting its half value will provide the evenly distributed randomness. i.e from -0.4 to 0.4
-        dy = (Math.random() * 0.8) - 0.4;
-        circleArray.push(new Circle(x, y, dx, dy, 5))
+
+        // setting the range (-0.4 to +0.4). For example if dx = (Math.random() * 0.8) - 0.4  , 0.8 is the factor that decides the upper limit of randomness as 0.8. subtracting its half value will provide the evenly distributed randomness. i.e from -0.4 to 0.4
+        dx = (Math.random() * 1.8) - 0.9;
+        dy = (Math.random() * 1.8) - 0.9;
+        circleArray.push(new Circle(x, y, dx, dy, 0.1))
     }
 }
-fillCircleArray(500);
+fillCircleArray(2000);
 console.log(circleArray);
 function animate() {
     requestAnimationFrame(animate);
