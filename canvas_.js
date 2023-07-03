@@ -1,6 +1,6 @@
 var canvas = document.querySelector("canvas");
 
-// variables, if else, for loop, function, class, 
+
 
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
@@ -9,7 +9,7 @@ var c = canvas.getContext("2d");
 
 colorPalette = ["#e63946", "#F7F3D9", "#a8dadc", "#457b9d", "#1d3557"]
 // c.fillStyle = 'blue';
-// c.fillRect(100, 100, 100, 50);
+
 
 
 
@@ -31,7 +31,6 @@ window.addEventListener('mousemove', (e) => {
 
 
 // creating a class for the circle
-
 class Circle {
     constructor(x = 300, y = 300, dx = 5, dy = 5, radius = 0.1, baseradius = 0.1, maxradius = 30) {
         this.x = x;
@@ -92,7 +91,6 @@ class Circle {
 }
 
 // let circle = new Circle(300, 300, 1, 1, 30);
-
 let circleArray = [];
 
 function fillCircleArray(n) {
@@ -124,4 +122,7 @@ function animate() {
 
 }
 
+
+
+// Calling the animate function 
 animate();
