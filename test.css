@@ -10,6 +10,15 @@
 
 canvas {
     border: 1px solid black;
+    /* z-index: 1; */
     /* height: 100%;
     width: 100%; */
+}
+
+
+.card {
+    width: 20rem;
+    height: 30rem;
+    /* z-index: 2; */
+    background: #31beff;
 }
