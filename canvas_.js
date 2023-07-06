@@ -11,8 +11,6 @@ colorPalette = ["#e63946", "#F7F3D9", "#a8dadc", "#457b9d", "#1d3557"]
 // c.fillStyle = 'blue';
 
 
-
-
 window.addEventListener('resize', () => {
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
