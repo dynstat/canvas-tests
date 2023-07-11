@@ -41,6 +41,17 @@ class Particle {
 
 }
 
+class Collection {
+
+}
+
+class Behavior {
+
+}
+
+class Interaction {
+
+}
 
 
 function animate() {
