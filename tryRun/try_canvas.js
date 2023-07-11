@@ -1,14 +1,20 @@
 var myCanvas = document.querySelector("canvas");
-
-
-
 myCanvas.height = window.innerHeight;
 myCanvas.width = window.innerWidth;
 
 var c = myCanvas.getContext("2d");
+console.log(c);
 
 colorPalette = ["#e63946", "#F7F3D9", "#a8dadc", "#457b9d", "#1d3557"]
 // c.fillStyle = 'blue';
+
+const gradient = c.createLinearGradient(0, 0, myCanvas.width, myCanvas.height);
+gradient.addColorStop(0, 'white');
+gradient.addColorStop(0.5, 'gold');
+gradient.addColorStop(1, 'orange');
+c.fillStyle = gradient;
+
+
 
 // Fix the size of the canvas frame as the window gets resized.
 window.addEventListener('resize', () => {
@@ -31,17 +37,32 @@ window.addEventListener('mousemove', (e) => {
 
 class Particle {
 
-    constructor(ctx) {
+    constructor() {
         this.radius = Math.floor(Math.random() * 10 + 1);
         this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
         this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
         this.velx = Math.random() * 1 - 0.5;
         this.vely = Math.random() * 1 - 0.5;
     }
+    draw(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        ctx.fill();
+    }
 
 }
 
 class Collection {
+    constructor(count) {
+        this.count = count;
+        this.collection = [];
+        this.create();
+    }
+    create() {
+        for (let i = 0; i < this.count; i++) {
+            this.collection.push(new Particle())
+        }
+    }
 
 }
 
@@ -59,6 +80,7 @@ function animate() {
 
     c.clearRect(0, 0, innerWidth, innerHeight); // To clear the previously drawn objects every frame.
 
+    requestAnimationFrame(animate);
 }
 
 
