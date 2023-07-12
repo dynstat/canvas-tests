@@ -41,8 +41,11 @@ class Particle {
         this.radius = Math.floor(Math.random() * 10 + 1);
         this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
         this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
-        this.velx = Math.random() * 1 - 0.5;
-        this.vely = Math.random() * 1 - 0.5;
+        this.vx = Math.random() * 1 - 0.5;
+        this.vy = Math.random() * 1 - 0.5;
+        this.pushX = 0;
+        this.pushY = 0;
+        this.friction = 0.95;
     }
     draw(ctx) {
         ctx.beginPath();
@@ -53,20 +56,53 @@ class Particle {
 }
 
 class Collection {
-    constructor(count) {
+    constructor(count, behaviour) {
         this.count = count;
         this.collection = [];
         this.create();
+        this.behavior = behaviour;
+        this.behaviour.handleParticles();
     }
     create() {
         for (let i = 0; i < this.count; i++) {
             this.collection.push(new Particle())
         }
     }
+    effect(particle) {
+        particle.x += (particle.pushX *= particle.friction) + particle.vx;
+        particle.y += (particle.pushY *= particle.friction) + particle.vy;
+
+        if (particle.x < particle.radius) {
+            particle.x = particle.radius;
+            particle.vx *= -1;
+        } else if (particle.x > particle.effect.width - particle.radius) {
+            particle.x = particle.effect.width - particle.radius;
+            particle.vx *= -1;
+        }
+        if (particle.y < particle.radius) {
+            particle.y = particle.radius;
+            particle.vy *= -1;
+        } else if (particle.y > particle.effect.height - particle.radius) {
+            particle.y = particle.effect.height - particle.radius;
+            particle.vy *= -1;
+        }
+
+    }
 
 }
 
 class Behavior {
+    constructor() {
+
+    }
+    handleParticles(collection) {
+        collection.forEach(particle => {
+            particle.draw(c);
+
+
+        });
+    }
+
 
 }
 
@@ -74,12 +110,15 @@ class Interaction {
 
 }
 
+let behaviour1 = new Behavior();
+let particlesCollection = new Collection(100, behaviour1);
+
 
 function animate() {
     requestAnimationFrame(animate);
 
     c.clearRect(0, 0, innerWidth, innerHeight); // To clear the previously drawn objects every frame.
-
+    // particlesCollection
     requestAnimationFrame(animate);
 }
 
