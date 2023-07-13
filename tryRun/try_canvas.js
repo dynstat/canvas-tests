@@ -53,6 +53,7 @@ class Particle {
         ctx.fill();
     }
 
+
 }
 
 class Collection {
@@ -62,11 +63,40 @@ class Collection {
         this.create();
         this.behavior = behaviour;
         this.behaviour.handleParticles();
+        this.mouse = {
+            x: 0,
+            y: 0,
+            pressed: false,
+            radius: 200
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            this.mouse.x = e.x;
+            this.mouse.y = e.y;
+        })
     }
     create() {
         for (let i = 0; i < this.count; i++) {
             this.collection.push(new Particle())
         }
+    }
+
+
+
+}
+
+class Behavior {
+    constructor() {
+
+    }
+    behave(collection) {
+        collection.forEach(particle => {
+            particle.draw(c);
+            this.effect(particle)
+
+        });
+
+
     }
     effect(particle) {
         particle.x += (particle.pushX *= particle.friction) + particle.vx;
@@ -87,20 +117,6 @@ class Collection {
             particle.vy *= -1;
         }
 
-    }
-
-}
-
-class Behavior {
-    constructor() {
-
-    }
-    handleParticles(collection) {
-        collection.forEach(particle => {
-            particle.draw(c);
-
-
-        });
     }
 
 
