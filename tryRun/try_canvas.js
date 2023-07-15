@@ -3,13 +3,13 @@ myCanvas.height = window.innerHeight;
 myCanvas.width = window.innerWidth;
 
 var c = myCanvas.getContext("2d");
-console.log(c);
+// console.log(c);
 
 colorPalette = ["#e63946", "#F7F3D9", "#a8dadc", "#457b9d", "#1d3557"]
 // c.fillStyle = 'blue';
 
 const gradient = c.createLinearGradient(0, 0, myCanvas.width, myCanvas.height);
-gradient.addColorStop(0, 'white');
+gradient.addColorStop(0, 'green');
 gradient.addColorStop(0.5, 'gold');
 gradient.addColorStop(1, 'orange');
 c.fillStyle = gradient;
@@ -38,6 +38,7 @@ window.addEventListener('mousemove', (e) => {
 class Particle {
 
     constructor() {
+        // console.log("PARTICLE CLASS");
         this.radius = Math.floor(Math.random() * 10 + 1);
         this.x = this.radius + Math.random() * (myCanvas.width - this.radius * 2);
         this.y = this.radius + Math.random() * (myCanvas.height - this.radius * 2);
@@ -48,8 +49,9 @@ class Particle {
         this.friction = 0.95;
     }
     draw(ctx) {
+        // console.log("PARTICLE----->draw");
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fill();
     }
 
@@ -58,9 +60,9 @@ class Particle {
 
 class Collection {
     constructor(count, behaviour) {
+        // console.log("COLLECTION CLASS");
         this.count = count;
-        this.collection = [];
-        this.create();
+        this.particles = [];
         this.behavior = behaviour;
         this.mouse = {
             x: 0,
@@ -68,6 +70,7 @@ class Collection {
             pressed: false,
             radius: 200
         }
+        this.create();
 
         window.addEventListener('mousemove', (e) => {
             this.mouse.x = e.x;
@@ -75,13 +78,15 @@ class Collection {
         })
     }
     create() {
+        // console.log("COLLECTION---->create");
         for (let i = 0; i < this.count; i++) {
-            this.collection.push(new Particle())
+            this.particles.push(new Particle())
         }
     }
     start() {
+        // console.log("COLLECTION---->start");
 
-        this.behaviour.behave(this.collection);
+        this.behavior.behave(this.particles);
     }
 
 
@@ -90,10 +95,13 @@ class Collection {
 
 class Behavior {
     constructor() {
+        // console.log("BEHAVIOR CLASS");
 
     }
     behave(collection) {
+        // console.log("BEHAVIOR---->behave");
         collection.forEach(particle => {
+            // console.log(particle);
             particle.draw(c);
             this.effect(particle);
 
@@ -102,21 +110,22 @@ class Behavior {
 
     }
     effect(particle) {
+        // console.log("BEHAVIOR--->effect");
         particle.x += (particle.pushX *= particle.friction) + particle.vx;
         particle.y += (particle.pushY *= particle.friction) + particle.vy;
 
         if (particle.x < particle.radius) {
             particle.x = particle.radius;
             particle.vx *= -1;
-        } else if (particle.x > particle.effect.width - particle.radius) {
-            particle.x = particle.effect.width - particle.radius;
+        } else if (particle.x > window.innerWidth - particle.radius) {
+            particle.x = window.innerWidth - particle.radius;
             particle.vx *= -1;
         }
         if (particle.y < particle.radius) {
             particle.y = particle.radius;
             particle.vy *= -1;
-        } else if (particle.y > particle.effect.height - particle.radius) {
-            particle.y = particle.effect.height - particle.radius;
+        } else if (particle.y > window.innerHeight - particle.radius) {
+            particle.y = window.innerHeight - particle.radius;
             particle.vy *= -1;
         }
 
@@ -125,16 +134,15 @@ class Behavior {
 
 }
 
-class Interaction {
+// class Interaction {
 
-}
+// }
 
 let behaviour1 = new Behavior();
 let particlesCollection = new Collection(100, behaviour1);
 
 
 function animate() {
-    requestAnimationFrame(animate);
 
     c.clearRect(0, 0, innerWidth, innerHeight); // To clear the previously drawn objects every frame.
     // particlesCollection
