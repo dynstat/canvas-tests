@@ -80,7 +80,7 @@ class Circle {
                 this.radius -= 0.1;
             }
 
-            c.stroke();
+            // c.stroke();
         }
     }
 
