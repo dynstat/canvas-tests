@@ -39,8 +39,8 @@ class Particle {
 
     constructor() {
         this.radius = Math.floor(Math.random() * 10 + 1);
-        this.x = this.radius + Math.random() * (this.effect.width - this.radius * 2);
-        this.y = this.radius + Math.random() * (this.effect.height - this.radius * 2);
+        this.x = this.radius + Math.random() * (myCanvas.width - this.radius * 2);
+        this.y = this.radius + Math.random() * (myCanvas.height - this.radius * 2);
         this.vx = Math.random() * 1 - 0.5;
         this.vy = Math.random() * 1 - 0.5;
         this.pushX = 0;
@@ -62,7 +62,6 @@ class Collection {
         this.collection = [];
         this.create();
         this.behavior = behaviour;
-        this.behaviour.handleParticles();
         this.mouse = {
             x: 0,
             y: 0,
@@ -80,6 +79,10 @@ class Collection {
             this.collection.push(new Particle())
         }
     }
+    start() {
+
+        this.behaviour.behave(this.collection);
+    }
 
 
 
@@ -92,7 +95,7 @@ class Behavior {
     behave(collection) {
         collection.forEach(particle => {
             particle.draw(c);
-            this.effect(particle)
+            this.effect(particle);
 
         });
 
@@ -135,6 +138,7 @@ function animate() {
 
     c.clearRect(0, 0, innerWidth, innerHeight); // To clear the previously drawn objects every frame.
     // particlesCollection
+    particlesCollection.start();
     requestAnimationFrame(animate);
 }
 
