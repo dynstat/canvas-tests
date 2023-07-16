@@ -28,7 +28,9 @@ window.addEventListener('resize', () => {
 // mouse events
 let mouse = {
     x: undefined,
-    y: undefined
+    y: undefined,
+    pressed: false,
+    radius: 200
 }
 
 window.addEventListener('mousemove', (e) => {
@@ -49,7 +51,7 @@ class Particle {
         this.vy = Math.random() * 1 - 0.5;
         this.pushX = 0;
         this.pushY = 0;
-        this.friction = 0.95;
+        this.friction = 0.25; // maybe modify this value according to the weight of the particle. Closer the value to Zero, lesser the effect on the particle, since the particle's coordinates are being multiply with the friction value. 
     }
     draw(ctx) {
         // console.log("PARTICLE----->draw");
@@ -67,18 +69,18 @@ class Collection {
         this.count = count;
         this.particles = [];
         this.behavior = behaviour;
-        this.mouse = {
-            x: 0,
-            y: 0,
-            pressed: false,
-            radius: 200
-        }
+        // this.mouse = {
+        //     x: 0,
+        //     y: 0,
+        //     pressed: false,
+        //     radius: 200
+        // }
         this.create();
 
-        window.addEventListener('mousemove', (e) => {
-            this.mouse.x = e.x;
-            this.mouse.y = e.y;
-        })
+        //     window.addEventListener('mousemove', (e) => {
+        //         this.mouse.x = e.x;
+        //         this.mouse.y = e.y;
+        //     })
     }
     create() {
         // console.log("COLLECTION---->create");
@@ -114,6 +116,17 @@ class Behavior {
     }
     effect(particle) {
         // console.log("BEHAVIOR--->effect");
+
+        const dx = particle.x - mouse.x;
+        const dy = particle.y - mouse.y;
+        const distance = Math.hypot(dx, dy);
+        const force = (mouse.radius / distance);
+        if (distance < mouse.radius) {
+            const angle = Math.atan2(dy, dx);
+            particle.pushX += Math.cos(angle) * force;
+            particle.pushY += Math.sin(angle) * force;
+        }
+
         particle.x += (particle.pushX *= particle.friction) + particle.vx;
         particle.y += (particle.pushY *= particle.friction) + particle.vy;
 
