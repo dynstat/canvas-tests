@@ -9,9 +9,11 @@ colorPalette = ["#e63946", "#F7F3D9", "#a8dadc", "#457b9d", "#1d3557"]
 // c.fillStyle = 'blue';
 
 const gradient = c.createLinearGradient(0, 0, myCanvas.width, myCanvas.height);
-gradient.addColorStop(0, 'green');
-gradient.addColorStop(0.5, 'gold');
-gradient.addColorStop(1, 'orange');
+gradient.addColorStop(0, '#d4362b');
+gradient.addColorStop(0.25, '#f89334');
+gradient.addColorStop(0.5, '#e4e706');
+gradient.addColorStop(0.75, '#65dd15');
+gradient.addColorStop(1, '#35d1d6');
 c.fillStyle = gradient;
 
 
@@ -20,6 +22,7 @@ c.fillStyle = gradient;
 window.addEventListener('resize', () => {
     myCanvas.height = window.innerHeight;
     myCanvas.width = window.innerWidth;
+    c.fillStyle = gradient;
 })
 
 // mouse events
