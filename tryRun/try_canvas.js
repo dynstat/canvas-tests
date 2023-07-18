@@ -59,7 +59,10 @@ class Particle {
         this.vy = Math.random() * 1 - 0.5;
         this.pushX = 0;
         this.pushY = 0;
-        this.friction = 0.45; // maybe modify this value according to the weight of the particle. Closer the value to Zero, lesser the effect on the particle, since the particle's coordinates are being multiply with the friction value. 
+
+        // More the friction value gets closer to 1, more will be the effect of Push value, as the Push value is being multiplied with friction value.
+        this.friction = 0.45;
+        //maybe modify this value according to the weight of the particle. Closer the value to Zero, lesser the effect on the particle, since the particle's coordinates are being multiply with the friction value. 
     }
 
     // method to draw the particle (using arc method to create a circle.)
@@ -173,7 +176,7 @@ class Behavior {
 
 }
 
-class Interaction {
+class CollectionSelfInteraction {
 
 }
 
