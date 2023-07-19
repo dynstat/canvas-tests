@@ -195,13 +195,15 @@ class CollectionSelfInteraction {
                 const distance = Math.hypot(ab_x, ab_y);
                 if (distance < maxDistance) {
                     context.save(); // creating a savepoint
+
+                    // changing the opacity according to the distance to maxdistance ratio.
                     const opacity = 1 - (distance / maxDistance);
                     context.globalAlpha = opacity;
                     context.beginPath();
                     context.moveTo(particles[a].x, particles[a].y);
                     context.lineTo(particles[b].x, particles[b].y);
-
                     context.stroke();
+
                     context.restore(); // restoring back to the previous saved point.
                 }
             }
