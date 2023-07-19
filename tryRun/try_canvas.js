@@ -19,7 +19,7 @@ gradient.addColorStop(0.25, '#f89334');
 gradient.addColorStop(0.5, '#e4e706');
 gradient.addColorStop(0.75, '#65dd15');
 gradient.addColorStop(1, '#35d1d6');
-
+c.strokeStyle = gradient;
 c.fillStyle = gradient; // styling the context with the above gradient
 
 
@@ -28,6 +28,7 @@ c.fillStyle = gradient; // styling the context with the above gradient
 window.addEventListener('resize', () => {
     myCanvas.height = window.innerHeight;
     myCanvas.width = window.innerWidth;
+    c.strokeStyle = gradient;
     c.fillStyle = gradient; // also re-style the canvas using its context 
 })
 
@@ -193,14 +194,15 @@ class CollectionSelfInteraction {
                 const ab_y = particles[a].y - particles[b].y;
                 const distance = Math.hypot(ab_x, ab_y);
                 if (distance < maxDistance) {
-                    context.save();
+                    context.save(); // creating a savepoint
                     const opacity = 1 - (distance / maxDistance);
                     context.globalAlpha = opacity;
                     context.beginPath();
                     context.moveTo(particles[a].x, particles[a].y);
                     context.lineTo(particles[b].x, particles[b].y);
+
                     context.stroke();
-                    context.restore();
+                    context.restore(); // restoring back to the previous saved point.
                 }
             }
         }
