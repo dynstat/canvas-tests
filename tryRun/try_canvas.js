@@ -60,7 +60,7 @@ class Particle {
         this.pushX = 0;
         this.pushY = 0;
 
-        // More the friction value gets closer to 1, more will be the effect of Push value, as the Push value is being multiplied with friction value.
+        // More the friction value gets closer to 1, more will be the effect of Push value, as the Push value is being multiplied with friction value later in the code.
         this.friction = 0.45;
         //maybe modify this value according to the weight of the particle. Closer the value to Zero, lesser the effect on the particle, since the particle's coordinates are being multiply with the friction value. 
     }
@@ -78,11 +78,12 @@ class Particle {
 
 // Class for the collections of the particles defined in the other class.
 class Collection {
-    constructor(count, behaviour) {
+    constructor(count, behaviour, interacion) {
         // console.log("COLLECTION CLASS");
         this.count = count;
         this.particles = [];
         this.behavior = behaviour;
+        this.selfInteraction = interacion;
         // this.mouse = {
         //     x: 0,
         //     y: 0,
@@ -108,7 +109,7 @@ class Collection {
     // internally calls the behave function of the behavior object that we have chosen for this collection. 
     start() {
         // console.log("COLLECTION---->start");
-
+        this.selfInteraction.connectParticles(c, this.particles);
         this.behavior.behave(this.particles);
     }
 }
@@ -143,10 +144,11 @@ class Behavior {
         particle.x += (particle.pushX *= particle.friction) + particle.vx;
         particle.y += (particle.pushY *= particle.friction) + particle.vy;
 
-        // making it bounce from the edges of the screen.
+        // making it reverse the direction if the window is resized so that the particles do not get out of the canvas.
         if (particle.x < particle.radius) {
             particle.x = particle.radius;
             particle.vx *= -1;
+            // making it reverse the direction from the edges of the screen.
         } else if (particle.x > window.innerWidth - particle.radius) {
             particle.x = window.innerWidth - particle.radius;
             particle.vx *= -1;
@@ -164,10 +166,12 @@ class Behavior {
     // behave method consists of applying a callback function for each particle in the collection
     behave(collection) {
         // console.log("BEHAVIOR---->behave");
+
         collection.forEach(particle => {
             // console.log(particle);
             particle.draw(c);
             this.effect(particle);
+
 
         });
     }
@@ -177,14 +181,43 @@ class Behavior {
 }
 
 class CollectionSelfInteraction {
+    constructor() {
+        // console.log("CollectionSelfInteraction Constructor");
+
+    }
+    connectParticles(context, particles) {
+        const maxDistance = 70;
+        for (let a = 0; a < particles.length; a++) {
+            for (let b = a; b < particles.length; b++) {
+                const ab_x = particles[a].x - particles[b].x;
+                const ab_y = particles[a].y - particles[b].y;
+                const distance = Math.hypot(ab_x, ab_y);
+                if (distance < maxDistance) {
+                    context.save();
+                    const opacity = 1 - (distance / maxDistance);
+                    context.globalAlpha = opacity;
+                    context.beginPath();
+                    context.moveTo(particles[a].x, particles[a].y);
+                    context.lineTo(particles[b].x, particles[b].y);
+                    context.stroke();
+                    context.restore();
+                }
+            }
+        }
+    }
 
 }
 
 // creating a custom behavior object
 let behaviour1 = new Behavior();
 
+
+//creating a custom CollectionSelfInteraction object.
+let selfInteraction1 = new CollectionSelfInteraction();
+
+
 // collection object
-let particlesCollection = new Collection(1000, behaviour1);
+let particlesCollection = new Collection(1000, behaviour1, selfInteraction1);
 
 
 // defining the animate function
