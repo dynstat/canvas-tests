@@ -43,10 +43,13 @@ class Circle {
         this.maxradius = maxradius;
         this.color = colorPalette[Math.floor(Math.random() * 6 - 0.1)];
         this.draw = function () {
+            // every new frame will start with the beginPath() method
             c.beginPath();
 
 
             c.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+
+            // add stroke only when the radius hits a certain value
             if (this.radius > 8) {
                 c.strokeStyle = "#222222";
                 c.lineWidth = 2;
