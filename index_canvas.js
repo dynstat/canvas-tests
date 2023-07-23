@@ -7,10 +7,7 @@ canvas.width = window.innerWidth;
 
 var c = canvas.getContext("2d");
 
-// colorPalette = ["#e63946", "#F7F3D9", "#a8dadc", "#457b9d", "#1d3557"]
-colorPalette = ["#0C090D", "#E01A4F", "#F15946", "#F9C22E", "#53B3CB"]
-// colorPalette = ["#006466", "#065A60", "#0B525B", "#144552", "#1B3A4B",
-// "#212F45", "#272640", "#312244", "#3E1F47", "#4D194D"]
+colorPalette = ["#e63946", "#F7F3D9", "#a8dadc", "#457b9d", "#1d3557"]
 // c.fillStyle = 'blue';
 
 
@@ -41,18 +38,13 @@ class Circle {
         this.radius = radius;
         this.baseradius = baseradius;
         this.maxradius = maxradius;
-        this.color = colorPalette[Math.floor(Math.random() * 6 - 0.1)];
+        this.color = colorPalette[Math.floor(Math.random() * 4)];
         this.draw = function () {
             c.beginPath();
 
 
-            c.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            if (this.radius > 8) {
-                c.strokeStyle = "#222222";
-                c.lineWidth = 2;
-                c.stroke();
-            }
-
+            c.strokeStyle = this.color;
+            c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
             c.fillStyle = this.color;
             c.fill();
             // console.log(`1   x = ${this.x}, y = ${this.y}`);
@@ -88,12 +80,7 @@ class Circle {
                 this.radius -= 0.1;
             }
 
-            if (this.radius < 5) {
-                c.strokeStyle = "#e9e9e9ff";
-                c.lineWidth = 0.1;
-                c.stroke();
-            }
-            // // c.stroke();
+            // c.stroke();
         }
     }
 
@@ -121,11 +108,11 @@ function fillCircleArray(n) {
     }
 }
 if (window.innerWidth > 600) {
-    fillCircleArray(2000);
+fillCircleArray(2000); 
 }
 else {
-    fillCircleArray(100);
-
+fillCircleArray(50); 
+    
 }
 // console.log(circleArray);
 function animate() {
