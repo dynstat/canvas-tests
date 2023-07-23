@@ -107,7 +107,13 @@ function fillCircleArray(n) {
         circleArray.push(new Circle(x, y, dx, dy, 0.1))
     }
 }
-fillCircleArray(2000);
+if (window.innerWidth > 600) {
+fillCircleArray(2000); 
+}
+else {
+fillCircleArray(50); 
+    
+}
 // console.log(circleArray);
 function animate() {
     requestAnimationFrame(animate);
