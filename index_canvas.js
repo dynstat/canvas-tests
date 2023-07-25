@@ -96,7 +96,7 @@ class Circle {
                 c.lineWidth = 0.1;
                 c.stroke();
             }
-            // // c.stroke();
+
         }
     }
 
