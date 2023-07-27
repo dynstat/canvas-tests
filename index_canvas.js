@@ -7,8 +7,8 @@ canvas.width = window.innerWidth;
 
 var c = canvas.getContext("2d");
 
-// colorPalette = ["#e63946", "#F7F3D9", "#a8dadc", "#457b9d", "#1d3557"]
-colorPalette = ["#0C090D", "#E01A4F", "#F15946", "#F9C22E", "#53B3CB"]
+colorPalette = ["#e63946", "#F7F3D9", "#a8dadc", "#457b9d", "#1d3557"]
+// colorPalette = ["#0C090D", "#E01A4F", "#F15946", "#F9C22E", "#53B3CB"]
 // colorPalette = ["#006466", "#065A60", "#0B525B", "#144552", "#1B3A4B",
 // "#212F45", "#272640", "#312244", "#3E1F47", "#4D194D"]
 // c.fillStyle = 'blue';
@@ -84,11 +84,11 @@ class Circle {
             if (mouse.x - this.x < 50 && mouse.x - this.x > -50
                 && mouse.y - this.y < 50 && mouse.y - this.y > -50) {
                 if (this.radius < maxradius) {
-                    this.radius += 2; // 1 is rate of size increase in the radius.
+                    this.radius += 2.8; // 1 is rate of size increase in the radius.
                 }
             }
             else if (this.radius > baseradius) {
-                this.radius -= 0.1;
+                this.radius -= 0.08;
             }
 
             if (this.radius < 5) {
