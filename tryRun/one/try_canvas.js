@@ -183,8 +183,6 @@ class Behavior {
 
 class CollectionSelfInteraction {
     constructor() {
-        // console.log("CollectionSelfInteraction Constructor");
-
     }
     connectParticles(context, particles) {
         const maxDistance = 70;
