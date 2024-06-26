@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Particle Simulation</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <h1>Particle Simulation</h1>
+    <canvas id="particleCanvas"></canvas>
+    <div class="controls">
+        <div class="slider-container">
+            <label for="particleCount">Particle Count:</label>
+            <input type="range" id="particleCount" min="1" max="1000" value="100">
+            <span id="particleCountValue">100</span>
+        </div>
+        <div class="slider-container">
+            <label for="particleSpeed">Particle Speed:</label>
+            <input type="range" id="particleSpeed" min="1" max="10" value="5">
+            <span id="particleSpeedValue">5</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+  
+</body>
+</html>
